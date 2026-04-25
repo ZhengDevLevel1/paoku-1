@@ -145,7 +145,7 @@ export const HUD: React.FC = () => {
                         </button>
 
                         <p className="text-cyan-400/60 text-[10px] md:text-xs font-mono mt-3 tracking-wider">
-                            [ ARROWS / SWIPE TO MOVE ]
+                            [ ARROWS / SWIPE / BUTTONS TO MOVE ]
                         </p>
                      </div>
                 </div>
@@ -286,9 +286,41 @@ export const HUD: React.FC = () => {
             })}
         </div>
 
-        {/* Bottom Overlay */}
-        <div className="w-full flex justify-end items-end">
-             <div className="flex items-center space-x-2 text-cyan-500 opacity-70">
+        {/* Bottom Overlay & Controls */}
+        <div className="w-full flex flex-col justify-end items-end h-full mt-auto">
+            
+            {/* Virtual Controls layout */}
+            <div className="w-full flex justify-between items-end pb-4 pointer-events-auto">
+                 <div className="flex space-x-4">
+                     <button 
+                        onTouchStart={(e) => e.stopPropagation()}
+                        onTouchEnd={(e) => e.stopPropagation()}
+                        onPointerDown={(e) => { e.stopPropagation(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowLeft', bubbles: true })); }}
+                        className="w-16 h-16 bg-white/10 active:bg-white/30 backdrop-blur-md rounded-full border border-white/20 flex items-center justify-center shadow-[0_0_15px_rgba(0,255,255,0.2)]"
+                     >
+                         <div className="w-0 h-0 border-y-8 border-y-transparent border-r-[12px] border-r-white/80"></div>
+                     </button>
+                     <button 
+                         onTouchStart={(e) => e.stopPropagation()}
+                         onTouchEnd={(e) => e.stopPropagation()}
+                         onPointerDown={(e) => { e.stopPropagation(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })); }}
+                         className="w-16 h-16 bg-white/10 active:bg-white/30 backdrop-blur-md rounded-full border border-white/20 flex items-center justify-center shadow-[0_0_15px_rgba(0,255,255,0.2)]"
+                     >
+                         <div className="w-0 h-0 border-y-8 border-y-transparent border-l-[12px] border-l-white/80"></div>
+                     </button>
+                 </div>
+
+                 <button 
+                     onTouchStart={(e) => e.stopPropagation()}
+                     onTouchEnd={(e) => e.stopPropagation()}
+                     onPointerDown={(e) => { e.stopPropagation(); window.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowUp', bubbles: true })); }}
+                     className="w-20 h-20 bg-cyan-500/20 active:bg-cyan-500/50 backdrop-blur-md rounded-full border border-cyan-400/50 flex items-center justify-center shadow-[0_0_20px_rgba(0,255,255,0.4)]"
+                 >
+                     <div className="w-0 h-0 border-x-[12px] border-x-transparent border-b-[16px] border-b-cyan-200"></div>
+                 </button>
+            </div>
+
+             <div className="flex w-full items-center justify-end space-x-2 text-cyan-500 opacity-70">
                  <Zap className="w-4 h-4 md:w-6 md:h-6 animate-pulse" />
                  <span className="font-mono text-base md:text-xl">SPEED {Math.round((speed / RUN_SPEED_BASE) * 100)}%</span>
              </div>
